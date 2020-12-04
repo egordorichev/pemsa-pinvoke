@@ -17,8 +17,8 @@ extern "C"
 {
 #endif
 
-	PEMSA_API PEMSA_HANDLE* __cdecl AllocateEmulator(ManagedFlip flip, ManagedCreateSurface createSurface, ManagedGetFps getfPS);
-	PEMSA_API void* __cdecl GetRam(PEMSA_HANDLE* emulator);
+	PEMSA_API PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip, ManagedCreateSurface createSurface, ManagedGetFps getfPS);
+	PEMSA_API void* GetRam(PEMSA_HANDLE* emulator);
 	PEMSA_API uint8_t GetScreenColor(PEMSA_HANDLE* emulator, int i);
 	PEMSA_API void UpdateEmulator(PEMSA_HANDLE* emulator, double delta);
 	PEMSA_API void LoadCart(PEMSA_HANDLE* emulator, const char* cart);

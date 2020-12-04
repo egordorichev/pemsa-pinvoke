@@ -13,12 +13,12 @@ PInvokeInputBackend::~PInvokeInputBackend()
 
 bool PInvokeInputBackend::isButtonDown(int i, int p)
 {
-	return true;
+	return false;
 }
 
 bool PInvokeInputBackend::isButtonPressed(int i, int p)
 {
-	return true;
+	return false;
 }
 
 void PInvokeInputBackend::update()
@@ -54,4 +54,9 @@ bool PInvokeInputBackend::hasKey()
 void PInvokeInputBackend::reset()
 {
 
+}
+
+const char* PInvokeInputBackend::getClipboardText()
+{
+	return nullptr;
 }

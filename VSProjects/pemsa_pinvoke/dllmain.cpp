@@ -20,10 +20,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
+bool running = true;
 
 PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip, ManagedCreateSurface createSurface, ManagedGetFps getfPS)
 {
-    return (PEMSA_HANDLE*)(new PemsaEmulator(new PInvokeGraphicsBackend(flip, createSurface, getfPS), new PInvokeAudioBackend(), new PInvokeInputBackend(), nullptr));
+    return (PEMSA_HANDLE*)(new PemsaEmulator(new PInvokeGraphicsBackend(flip, createSurface, getfPS), new PInvokeAudioBackend(), new PInvokeInputBackend(), &running));
 }
 
 void* GetRam(PEMSA_HANDLE* emulator)

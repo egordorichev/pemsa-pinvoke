@@ -19,4 +19,6 @@ public:
 	const char* readKey() override;
 	bool hasKey() override;
 	void reset() override;
+
+	const char* getClipboardText() override;
 };

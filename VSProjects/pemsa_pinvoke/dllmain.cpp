@@ -22,9 +22,25 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 bool running = true;
 
-PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip, ManagedCreateSurface createSurface, ManagedGetFps getfPS)
+PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip,
+    ManagedCreateSurface createSurface,
+    ManagedGetFps getfPS,
+    ManagedIsButtonDown isButtonDown,
+    ManagedIsButtonPressed isButtonPressed,
+    ManagedUpdate update,
+    ManagedGetMouseX getMouseX,
+    ManagedGetMouseY getMouseY,
+    ManagedGetMouseMask getMouseMask,
+    ManagedReadKey readKey,
+    ManagedHasKey hasKey,
+    ManagedReset reset,
+    ManagedGetClipboardText getClipboardText)
 {
-    return (PEMSA_HANDLE*)(new PemsaEmulator(new PInvokeGraphicsBackend(flip, createSurface, getfPS), new PInvokeAudioBackend(), new PInvokeInputBackend(), &running));
+    return (PEMSA_HANDLE*)(new PemsaEmulator(
+        new PInvokeGraphicsBackend(flip, createSurface, getfPS), 
+        new PInvokeAudioBackend(), 
+        new PInvokeInputBackend(isButtonDown, isButtonPressed, update, getMouseX, getMouseY, getMouseMask, readKey, hasKey, reset, getClipboardText), 
+        &running));
 }
 
 void* GetRam(PEMSA_HANDLE* emulator)

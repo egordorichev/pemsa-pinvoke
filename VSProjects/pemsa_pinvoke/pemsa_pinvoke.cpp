@@ -1,28 +1,9 @@
-// dllmain.cpp : Defines the entry point for the DLL application.
-#include "pch.h"
-
 #include "pemsa/pemsa_emulator.hpp"
 #include "pemsa_pinvoke.h"
 
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                     )
-{
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
-        break;
-    }
-    return TRUE;
-}
-
 bool running = true;
 
-PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip,
+PEMSA_HANDLE AllocateEmulator(ManagedFlip flip,
     ManagedCreateSurface createSurface,
     ManagedGetFps getfPS,
     ManagedIsButtonDown isButtonDown,
@@ -36,29 +17,49 @@ PEMSA_HANDLE* AllocateEmulator(ManagedFlip flip,
     ManagedReset reset,
     ManagedGetClipboardText getClipboardText)
 {
-    return (PEMSA_HANDLE*)(new PemsaEmulator(
+    return (PEMSA_HANDLE)(new PemsaEmulator(
         new PInvokeGraphicsBackend(flip, createSurface, getfPS), 
         new PInvokeAudioBackend(), 
         new PInvokeInputBackend(isButtonDown, isButtonPressed, update, getMouseX, getMouseY, getMouseMask, readKey, hasKey, reset, getClipboardText), 
         &running));
 }
 
-void* GetRam(PEMSA_HANDLE* emulator)
+PEMSA_API void FreeEmulator(PEMSA_HANDLE emulator)
+{
+    free(emulator);
+}
+
+PEMSA_API void StopEmulator(PEMSA_HANDLE emulator)
+{
+    ((PemsaEmulator*)emulator)->stop();
+}
+
+PEMSA_API void ResetEmulator(PEMSA_HANDLE emulator)
+{
+    ((PemsaEmulator*)emulator)->reset();
+}
+
+void* GetRam(PEMSA_HANDLE emulator)
 {
     return ((PemsaEmulator*)emulator)->getMemoryModule()->ram;
 }
 
-uint8_t GetScreenColor(PEMSA_HANDLE* emulator, int i)
+uint8_t GetScreenColor(PEMSA_HANDLE emulator, int i)
 {
     return ((PemsaEmulator*)emulator)->getDrawStateModule()->getScreenColor(i);
 }
 
-void UpdateEmulator(PEMSA_HANDLE* emulator, double delta)
+void UpdateEmulator(PEMSA_HANDLE emulator, double delta)
 {
     ((PemsaEmulator*)emulator)->update(delta);
 }
 
-void LoadCart(PEMSA_HANDLE* emulator, const char* cart)
+void LoadCart(PEMSA_HANDLE emulator, const char* cart)
 {
     ((PemsaEmulator*)emulator)->getCartridgeModule()->load(cart);
+}
+
+double SampleAudio(PEMSA_HANDLE emulator)
+{
+    return ((PemsaEmulator*)emulator)->getAudioModule()->sample();
 }

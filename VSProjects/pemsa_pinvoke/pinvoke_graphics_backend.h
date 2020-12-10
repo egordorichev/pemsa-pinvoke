@@ -2,9 +2,9 @@
 
 #include "pemsa/graphics/pemsa_graphics_backend.hpp"
 
-typedef void (*ManagedFlip)();
-typedef void (*ManagedCreateSurface)();
-typedef int (*ManagedGetFps)();
+typedef void (__cdecl*ManagedFlip)();
+typedef void (__cdecl*ManagedCreateSurface)();
+typedef int (__cdecl *ManagedGetFps)();
 
 class PInvokeGraphicsBackend : public PemsaGraphicsBackend {
 public:

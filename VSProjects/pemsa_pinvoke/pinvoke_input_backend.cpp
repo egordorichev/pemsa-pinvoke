@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "pinvoke_input_backend.h"
 
 PInvokeInputBackend::PInvokeInputBackend(

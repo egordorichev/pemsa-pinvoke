@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "pemsa/pemsa_emulator.hpp"
 #include "pinvoke_graphics_backend.h"
 

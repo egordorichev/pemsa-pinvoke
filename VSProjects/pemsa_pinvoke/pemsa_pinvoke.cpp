@@ -26,7 +26,7 @@ PEMSA_HANDLE AllocateEmulator(ManagedFlip flip,
 
 PEMSA_API void FreeEmulator(PEMSA_HANDLE emulator)
 {
-    free(emulator);
+    delete ((PemsaEmulator*)emulator);
 }
 
 PEMSA_API void StopEmulator(PEMSA_HANDLE emulator)

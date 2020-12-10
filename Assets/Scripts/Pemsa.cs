@@ -153,7 +153,7 @@ public class Pemsa : MonoBehaviour
             HasKey,
             ResetInput,
             GetClipboardText);
-        //LoadCart(emulator, "C:/Users/matdi/Documents/git/pemsa-carts/celeste.p8");
+        LoadCart(emulator, "C:/Users/matdi/Documents/git/pemsa-carts/celeste.p8");
     }
 
     // Update is called once per frame

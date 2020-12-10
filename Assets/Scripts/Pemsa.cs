@@ -9,6 +9,12 @@ using AOT;
 
 public static class PemsaEmulator
 {
+#if UNITY_STANDALONE_LINUX
+private const string PEMSA_LIBRARY_NAME = "pemsa_pinvoke.so";
+#elif UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+private const string PEMSA_LIBRARY_NAME = "pemsa_pinvoke.dll";
+#endif
+
     #region PEMSA_PINVOKE
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ManagedFlip();
@@ -37,7 +43,7 @@ public static class PemsaEmulator
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate string ManagedGetClipboardText();
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr AllocateEmulator(
         ManagedFlip flip,
         ManagedCreateSurface createSurface,
@@ -53,28 +59,28 @@ public static class PemsaEmulator
         ManagedResetInput resetInput,
         ManagedGetClipboardText getClipboardText);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern void FreeEmulator(IntPtr emulator);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern void StopEmulator(IntPtr emulator);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern void ResetEmulator(IntPtr emulator);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr GetRam(IntPtr emulator);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern Byte GetScreenColor(IntPtr emulator, int i);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern void UpdateEmulator(IntPtr emulator, double delta);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern void LoadCart(IntPtr emulator, string cart);
 
-    [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
     public static extern double SampleAudio(IntPtr emulator);
 
     #endregion

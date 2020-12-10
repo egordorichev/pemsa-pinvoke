@@ -7,42 +7,40 @@ using System.Threading;
 using UnityEngine.UI;
 using AOT;
 
-[RequireComponent(typeof(AudioSource))]
-public class Pemsa : MonoBehaviour
+public static class PemsaEmulator
 {
-
     #region PEMSA_PINVOKE
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void ManagedFlip();
+    public delegate void ManagedFlip();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void ManagedCreateSurface();
+    public delegate void ManagedCreateSurface();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate int ManagedGetFps();
+    public delegate int ManagedGetFps();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate bool ManagedIsButtonDown(int i, int p);
+    public delegate bool ManagedIsButtonDown(int i, int p);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate bool ManagedIsButtonPressed(int i, int p);
+    public delegate bool ManagedIsButtonPressed(int i, int p);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void ManagedUpdateInput();
+    public delegate void ManagedUpdateInput();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate int ManagedGetMouseX();
+    public delegate int ManagedGetMouseX();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate int ManagedGetMouseY();
+    public delegate int ManagedGetMouseY();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate int ManagedGetMouseMask();
+    public delegate int ManagedGetMouseMask();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate string ManagedReadKey();
+    public delegate string ManagedReadKey();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate bool ManagedHasKey();
+    public delegate bool ManagedHasKey();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate void ManagedResetInput();
+    public delegate void ManagedResetInput();
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    delegate string ManagedGetClipboardText();
+    public delegate string ManagedGetClipboardText();
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern IntPtr AllocateEmulator(
-        ManagedFlip flip, 
-        ManagedCreateSurface createSurface, 
+    public static extern IntPtr AllocateEmulator(
+        ManagedFlip flip,
+        ManagedCreateSurface createSurface,
         ManagedGetFps getFps,
         ManagedIsButtonDown isButtonDown,
         ManagedIsButtonPressed isButtonPressed,
@@ -56,31 +54,35 @@ public class Pemsa : MonoBehaviour
         ManagedGetClipboardText getClipboardText);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void FreeEmulator(IntPtr emulator);
+    public static extern void FreeEmulator(IntPtr emulator);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void StopEmulator(IntPtr emulator);
+    public static extern void StopEmulator(IntPtr emulator);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void ResetEmulator(IntPtr emulator);
+    public static extern void ResetEmulator(IntPtr emulator);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern IntPtr GetRam(IntPtr emulator);
+    public static extern IntPtr GetRam(IntPtr emulator);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern Byte GetScreenColor(IntPtr emulator, int i);
+    public static extern Byte GetScreenColor(IntPtr emulator, int i);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void UpdateEmulator(IntPtr emulator, double delta);
+    public static extern void UpdateEmulator(IntPtr emulator, double delta);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void LoadCart(IntPtr emulator, string cart);
+    public static extern void LoadCart(IntPtr emulator, string cart);
 
     [DllImport("pemsa_pinvoke.dll", CallingConvention = CallingConvention.Cdecl)]
-    private static extern double SampleAudio(IntPtr emulator);
-
+    public static extern double SampleAudio(IntPtr emulator);
 
     #endregion
+}
+
+[RequireComponent(typeof(AudioSource))]
+public class Pemsa : MonoBehaviour
+{
 
     public static Color[] standardPalette = {
             new Color( 0, 0, 0 ),
@@ -139,7 +141,7 @@ public class Pemsa : MonoBehaviour
 
         GetComponent<AudioSource>().Play();
 
-        emulator = AllocateEmulator(
+        emulator = PemsaEmulator.AllocateEmulator(
             Flip, 
             CreateSurface, 
             GetFps,
@@ -153,7 +155,7 @@ public class Pemsa : MonoBehaviour
             HasKey,
             ResetInput,
             GetClipboardText);
-        LoadCart(emulator, "C:/Users/matdi/Documents/git/pemsa-carts/celeste.p8");
+        PemsaEmulator.LoadCart(emulator, "C:/Users/matdi/Documents/git/pemsa-carts/celeste.p8");
     }
 
     // Update is called once per frame
@@ -216,7 +218,7 @@ public class Pemsa : MonoBehaviour
         // Update emulator.
         //
 
-        UpdateEmulator(emulator, Time.deltaTime);
+        PemsaEmulator.UpdateEmulator(emulator, Time.deltaTime);
         screenTexture.SetPixels(screenColorData);
 
         screenTexture.Apply();
@@ -229,14 +231,14 @@ public class Pemsa : MonoBehaviour
     {
         lock(emuLock)
         {
-            FreeEmulator(emulator);
+            PemsaEmulator.FreeEmulator(emulator);
             emulator = IntPtr.Zero;
         }
     }
 
     #region GRAPHICS
 
-    [MonoPInvokeCallback(typeof(ManagedFlip))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
     static void Flip()
     {
         if (emulator == IntPtr.Zero)
@@ -244,12 +246,12 @@ public class Pemsa : MonoBehaviour
             return;
         }
 
-        IntPtr ram = GetRam(emulator);
+        IntPtr ram = PemsaEmulator.GetRam(emulator);
         int[] screenColor = new int[16];
 
         for(int i = 0; i < 16; i++)
         {
-            screenColor[i] = GetScreenColor(emulator, i);
+            screenColor[i] = PemsaEmulator.GetScreenColor(emulator, i);
         }
 
         for (int i = 0; i < 0x2000; i++)
@@ -263,13 +265,13 @@ public class Pemsa : MonoBehaviour
         }
     }
 
-    [MonoPInvokeCallback(typeof(ManagedCreateSurface))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedCreateSurface))]
     static void CreateSurface()
     {
 
     }
 
-    [MonoPInvokeCallback(typeof(ManagedGetFps))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetFps))]
     static int GetFps()
     {
         return fps;
@@ -279,7 +281,7 @@ public class Pemsa : MonoBehaviour
 
     #region INPUT
 
-    [MonoPInvokeCallback(typeof(ManagedIsButtonDown))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonDown))]
     static bool IsButtonDown(int i, int p)
     {
         lock (buttonPressed)
@@ -288,7 +290,7 @@ public class Pemsa : MonoBehaviour
         }
     }
 
-    [MonoPInvokeCallback(typeof(ManagedIsButtonPressed))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonPressed))]
     static bool IsButtonPressed(int i, int p)
     {
         lock(buttonPressed)
@@ -297,31 +299,31 @@ public class Pemsa : MonoBehaviour
         }
     }
 
-    [MonoPInvokeCallback(typeof(ManagedUpdateInput))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedUpdateInput))]
     static void UpdateInput()
     {
 
     }
 
-    [MonoPInvokeCallback(typeof(ManagedGetMouseX))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseX))]
     static int GetMouseX()
     {
         return (int)mouseX;
     }
 
-    [MonoPInvokeCallback(typeof(ManagedGetMouseY))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseY))]
     static int GetMouseY()
     {
         return (int)mouseY;
     }
 
-    [MonoPInvokeCallback(typeof(ManagedGetMouseMask))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseMask))]
     static int GetMouseMask()
     {
         return mouseMask;
     }
 
-    [MonoPInvokeCallback(typeof(ManagedReadKey))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedReadKey))]
     static string ReadKey()
     {
         lock (lastKeyDown)
@@ -330,13 +332,13 @@ public class Pemsa : MonoBehaviour
         }
     }
 
-    [MonoPInvokeCallback(typeof(ManagedHasKey))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedHasKey))]
     static bool HasKey()
     {
         return anyKeyDown;
     }
 
-    [MonoPInvokeCallback(typeof(ManagedResetInput))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedResetInput))]
     static void ResetInput()
     {
         lock (buttonPressed)
@@ -351,7 +353,7 @@ public class Pemsa : MonoBehaviour
         }
     }
 
-    [MonoPInvokeCallback(typeof(ManagedGetClipboardText))]
+    [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetClipboardText))]
     static string GetClipboardText()
     {
         return GUIUtility.systemCopyBuffer;
@@ -379,7 +381,7 @@ public class Pemsa : MonoBehaviour
             {
                 for (int j = 0; j < channels; j += 1)
                 {
-                    data[i * channels + j] = (float)SampleAudio(emulator);
+                    data[i * channels + j] = (float)PemsaEmulator.SampleAudio(emulator);
                 }
             }
         }

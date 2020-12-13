@@ -35,6 +35,7 @@ extern "C"
 	PEMSA_API void UpdateEmulator(PEMSA_HANDLE emulator, double delta);
 	PEMSA_API void LoadCart(PEMSA_HANDLE emulator, const char* cart);
 	PEMSA_API double SampleAudio(PEMSA_HANDLE emulator);
+	PEMSA_API double* SampleAudioMultiple(PEMSA_HANDLE emulator, double* samples, int nSamples);
 
 #ifdef __cplusplus
 }

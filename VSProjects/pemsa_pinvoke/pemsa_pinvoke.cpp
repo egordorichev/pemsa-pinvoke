@@ -63,3 +63,14 @@ double SampleAudio(PEMSA_HANDLE emulator)
 {
     return ((PemsaEmulator*)emulator)->getAudioModule()->sample();
 }
+
+double* SampleAudioMultiple(PEMSA_HANDLE emulator, double* samples, int nSamples)
+{
+    PemsaAudioModule* audioModule = ((PemsaEmulator*)emulator)->getAudioModule();
+    for (int i = 0; i < nSamples; ++i)
+    {
+        samples[i] = audioModule->sample();
+    }
+
+    return samples;
+}

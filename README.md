@@ -1,2 +1,10 @@
-# pemsa-unity
-Unity backend for the pemsa pico8 runtime
+# pemsa-sdl
+SDL2 backend for pemsa pico8 runtime
+
+## Compiling
+
+```
+git submodule update --init --recursive
+cmake .
+make
+```

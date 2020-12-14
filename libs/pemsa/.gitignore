@@ -1,0 +1,12 @@
+dist/
+cmake-build*
+CMakeC*
+Makefile
+cmake-install*
+*.so
+*.a
+.cartdata
+code.lua
+*.cbp
+CMakeFiles*
+cmake_install*

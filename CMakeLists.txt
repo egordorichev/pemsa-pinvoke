@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(pemsa_pinvoke)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -Wno-attributes")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 add_subdirectory(libs/pemsa)
 

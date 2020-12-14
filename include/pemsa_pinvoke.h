@@ -1,11 +1,11 @@
 #ifndef PEMSA_PINVOKE_H
 #define PEMSA_PINVOKE_H
 
+#include "pemsa_common.h"
 #include "pinvoke_audio_backend.h"
 #include "pinvoke_graphics_backend.h"
 #include "pinvoke_input_backend.h"
 
-#define PEMSA_API __declspec(dllexport)
 typedef void *pemsa_handle_t;
 
 #ifdef __cplusplus

@@ -1,19 +1,21 @@
 #ifndef PINVOKE_INPUT_BACKEND_H
 #define PINVOKE_INPUT_BACKEND_H
 
+#include "pemsa_common.h"
+
 #include "pemsa/input/pemsa_input_backend.hpp"
 #include "pemsa/input/pemsa_input_module.hpp"
 
-typedef bool (__cdecl *ManagedIsButtonDown)(int i, int p);
-typedef bool (__cdecl *ManagedIsButtonPressed)(int i, int p);
-typedef void (__cdecl *ManagedUpdate)();
-typedef int (__cdecl *ManagedGetMouseX)();
-typedef int (__cdecl *ManagedGetMouseY)();
-typedef int (__cdecl *ManagedGetMouseMask)();
-typedef const char *(__cdecl *ManagedReadKey)();
-typedef bool (__cdecl *ManagedHasKey)();
-typedef void (__cdecl *ManagedReset)();
-typedef const char *(__cdecl *ManagedGetClipboardText)();
+typedef bool (*ManagedIsButtonDown)(int i, int p) PEMSA_API;
+typedef bool (*ManagedIsButtonPressed)(int i, int p) PEMSA_API;
+typedef void (*ManagedUpdate)() PEMSA_API;
+typedef int (*ManagedGetMouseX)() PEMSA_API;
+typedef int (*ManagedGetMouseY)() PEMSA_API;
+typedef int (*ManagedGetMouseMask)()PEMSA_API;
+typedef const char *(*ManagedReadKey)()PEMSA_API;
+typedef bool (*ManagedHasKey)()PEMSA_API;
+typedef void (*ManagedReset)()PEMSA_API;
+typedef const char *(*ManagedGetClipboardText)()PEMSA_API;
 
 class PInvokeInputBackend : public PemsaInputBackend {
 	public:

@@ -57,4 +57,11 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+dist/
+.idea/
+Makefile
+CMakeCa*
+cmake-install*
+CMakeFiles*
+install_manifest*
 

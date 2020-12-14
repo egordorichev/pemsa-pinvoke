@@ -1,11 +1,12 @@
 #ifndef PINVOKE_GRAPHICS_BACKEND_H
 #define PINVOKE_GRAPHICS_BACKEND_H
 
+#include "pemsa_common.h"
 #include "pemsa/graphics/pemsa_graphics_backend.hpp"
 
-typedef void (__cdecl *ManagedFlip)();
-typedef void (__cdecl *ManagedCreateSurface)();
-typedef int (__cdecl *ManagedGetFps)();
+typedef void (*ManagedFlip)() PEMSA_API;
+typedef void (*ManagedCreateSurface)() PEMSA_API;
+typedef int (*ManagedGetFps)() PEMSA_API;
 
 class PInvokeGraphicsBackend : public PemsaGraphicsBackend {
 	public:

@@ -64,4 +64,5 @@ CMakeCa*
 cmake-install*
 CMakeFiles*
 install_manifest*
+cmake-build*
 

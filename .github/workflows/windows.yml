@@ -25,13 +25,10 @@ jobs:
     - name: Build
       working-directory: ${{runner.workspace}}/build
       shell: bash
-      run: |
-        cmake --build . --config $BUILD_TYPE
-        dir
-        dir dist
+      run: cmake --build . --config $BUILD_TYPE
     
     - name: Publish
       uses: actions/upload-artifact@v2
       with:
         name: pemsa_pinvoke.dll
-        path: dist/pemsa_pinvoke.dll
+        path: pemsa-pinvoke/dist/Release/dist/pemsa_pinvoke.dll

@@ -11,3 +11,4 @@ add_library(pemsa_pinvoke SHARED src/pemsa_pinvoke.cpp src/pinvoke_graphics_back
 
 target_link_libraries(pemsa_pinvoke pemsa)
 set_target_properties(pemsa_pinvoke PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/)
+set_target_properties(pemsa_pinvoke PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/dist/)

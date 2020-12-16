@@ -6,6 +6,12 @@
 #include "pinvoke_graphics_backend.h"
 #include "pinvoke_input_backend.h"
 
+#ifdef __linux__
+#define PEMSA_API
+#else
+#define PEMSA_API __declspec(dllexport)
+#endif
+
 typedef void *pemsa_handle_t;
 
 #ifdef __cplusplus
@@ -41,4 +47,5 @@ PEMSA_API double *SampleAudioMultiple(pemsa_handle_t emulator, double *samples, 
 #ifdef __cplusplus
 }
 #endif
+
 #endif

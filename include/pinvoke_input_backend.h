@@ -6,16 +6,16 @@
 #include "pemsa/input/pemsa_input_backend.hpp"
 #include "pemsa/input/pemsa_input_module.hpp"
 
-typedef bool (*ManagedIsButtonDown)(int i, int p) PEMSA_API;
-typedef bool (*ManagedIsButtonPressed)(int i, int p) PEMSA_API;
-typedef void (*ManagedUpdate)() PEMSA_API;
-typedef int (*ManagedGetMouseX)() PEMSA_API;
-typedef int (*ManagedGetMouseY)() PEMSA_API;
-typedef int (*ManagedGetMouseMask)()PEMSA_API;
-typedef const char *(*ManagedReadKey)()PEMSA_API;
-typedef bool (*ManagedHasKey)()PEMSA_API;
-typedef void (*ManagedReset)()PEMSA_API;
-typedef const char *(*ManagedGetClipboardText)()PEMSA_API;
+DECLARE_CALLBACK(bool, ManagedIsButtonDown, int i, int p);
+DECLARE_CALLBACK(bool, ManagedIsButtonPressed, int i, int p);
+DECLARE_CALLBACK(void, ManagedUpdate, void);
+DECLARE_CALLBACK(int, ManagedGetMouseX, void);
+DECLARE_CALLBACK(int, ManagedGetMouseY, void);
+DECLARE_CALLBACK(int, ManagedGetMouseMask, void);
+DECLARE_CALLBACK(const char*, ManagedReadKey, void);
+DECLARE_CALLBACK(bool, ManagedHasKey, void);
+DECLARE_CALLBACK(void, ManagedReset, void);
+DECLARE_CALLBACK(const char*, ManagedGetClipboardText, void);
 
 class PInvokeInputBackend : public PemsaInputBackend {
 	public:

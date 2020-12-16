@@ -1,4 +1,4 @@
-name: CMake
+name: Build linux library
 
 on: [push]
 

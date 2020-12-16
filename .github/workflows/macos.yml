@@ -1,4 +1,4 @@
-name: Build linux library
+name: Build macos library
 
 on: [push]
 

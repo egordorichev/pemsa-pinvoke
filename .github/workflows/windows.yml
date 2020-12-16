@@ -31,4 +31,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: pemsa_pinvoke.dll
-        path: pemsa-pinvoke/dist/Release/dist/pemsa_pinvoke.dll
+        path: D:\a\pemsa-pinvoke\pemsa-pinvoke\dist\Release\pemsa_pinvoke.dll

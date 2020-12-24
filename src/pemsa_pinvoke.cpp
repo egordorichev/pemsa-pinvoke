@@ -6,6 +6,7 @@ bool running = true;
 pemsa_handle_t AllocateEmulator(ManagedFlip flip,
     ManagedCreateSurface createSurface,
     ManagedGetFps getfPS,
+	ManagedRender render,
     ManagedIsButtonDown isButtonDown,
     ManagedIsButtonPressed isButtonPressed,
     ManagedUpdate update,
@@ -15,13 +16,15 @@ pemsa_handle_t AllocateEmulator(ManagedFlip flip,
     ManagedReadKey readKey,
     ManagedHasKey hasKey,
     ManagedReset reset,
-    ManagedGetClipboardText getClipboardText) {
+    ManagedGetClipboardText getClipboardText,
+	bool disableSpash) {
 
 	return (pemsa_handle_t) (new PemsaEmulator(
-		new PInvokeGraphicsBackend(flip, createSurface, getfPS),
+		new PInvokeGraphicsBackend(flip, createSurface, getfPS, render),
 		new PInvokeAudioBackend(),
 		new PInvokeInputBackend(isButtonDown, isButtonPressed, update, getMouseX, getMouseY, getMouseMask, readKey, hasKey, reset, getClipboardText),
-			&running));
+		&running,
+		disableSpash));
 }
 
 PEMSA_API void FreeEmulator(pemsa_handle_t emulator) {
@@ -68,4 +71,8 @@ double *SampleAudioMultiple(pemsa_handle_t emulator, double *samples, int nSampl
 	}
 
 	return samples;
+}
+
+PEMSA_API void Render(pemsa_handle_t emulator) {
+	((PemsaEmulator*)emulator)->render();
 }

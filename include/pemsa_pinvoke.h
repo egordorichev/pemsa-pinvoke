@@ -22,6 +22,7 @@ PEMSA_API pemsa_handle_t AllocateEmulator(
 	ManagedFlip flip,
 	ManagedCreateSurface createSurface,
 	ManagedGetFps getfPS,
+	ManagedRender render,
 	ManagedIsButtonDown isButtonDown,
 	ManagedIsButtonPressed isButtonPressed,
 	ManagedUpdate update,
@@ -31,7 +32,8 @@ PEMSA_API pemsa_handle_t AllocateEmulator(
 	ManagedReadKey readKey,
 	ManagedHasKey hasKey,
 	ManagedReset reset,
-	ManagedGetClipboardText getClipboardText
+	ManagedGetClipboardText getClipboardText,
+	bool disableSpash
 );
 
 PEMSA_API void FreeEmulator(pemsa_handle_t emulator);
@@ -44,6 +46,7 @@ PEMSA_API void LoadCart(pemsa_handle_t emulator, const char *cart);
 PEMSA_API void CleanupAndLoadCart(pemsa_handle_t emulator, const char *cart);
 PEMSA_API double SampleAudio(pemsa_handle_t emulator);
 PEMSA_API double *SampleAudioMultiple(pemsa_handle_t emulator, double *samples, int nSamples);
+PEMSA_API void Render(pemsa_handle_t emulator);
 
 #ifdef __cplusplus
 }

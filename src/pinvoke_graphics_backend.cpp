@@ -2,7 +2,11 @@
 #include "pinvoke_graphics_backend.h"
 
 
-PInvokeGraphicsBackend::PInvokeGraphicsBackend(ManagedFlip mFlip, ManagedCreateSurface mCreateSurface, ManagedGetFps mGetFps) : managedFlip(mFlip), managedCreateSurface(mCreateSurface), managedGetFps(mGetFps) {
+PInvokeGraphicsBackend::PInvokeGraphicsBackend(ManagedFlip mFlip, ManagedCreateSurface mCreateSurface, ManagedGetFps mGetFps, ManagedRender mRender) : 
+	managedFlip(mFlip), 
+	managedCreateSurface(mCreateSurface), 
+	managedGetFps(mGetFps),
+	managedRender(mRender) {
 
 }
 
@@ -16,6 +20,10 @@ void PInvokeGraphicsBackend::createSurface() {
 
 void PInvokeGraphicsBackend::flip() {
 	this->managedFlip();
+}
+
+void PInvokeGraphicsBackend::render() {
+	this->managedRender();
 }
 
 PInvokeGraphicsBackend::~PInvokeGraphicsBackend() {

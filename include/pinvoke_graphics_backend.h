@@ -7,20 +7,23 @@
 DECLARE_CALLBACK(void, ManagedFlip, void);
 DECLARE_CALLBACK(void, ManagedCreateSurface, void);
 DECLARE_CALLBACK(int, ManagedGetFps, void);
+DECLARE_CALLBACK(int, ManagedRender, void);
 
 class PInvokeGraphicsBackend : public PemsaGraphicsBackend {
 	public:
-		PInvokeGraphicsBackend(ManagedFlip managedFlip, ManagedCreateSurface managedCreateSurface, ManagedGetFps managedGetFps);
+		PInvokeGraphicsBackend(ManagedFlip managedFlip, ManagedCreateSurface managedCreateSurface, ManagedGetFps managedGetFps, ManagedRender managedRender);
 		~PInvokeGraphicsBackend();
 
 		void createSurface() override;
 		void flip() override;
 		int getFps() override;
+		void render() override;
 
 	private:
 		ManagedFlip managedFlip;
 		ManagedCreateSurface managedCreateSurface;
 		ManagedGetFps managedGetFps;
+		ManagedRender managedRender;
 };
 
 #endif

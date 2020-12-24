@@ -52,6 +52,10 @@ void LoadCart(pemsa_handle_t emulator, const char *cart) {
 	((PemsaEmulator *) emulator)->getCartridgeModule()->load(cart);
 }
 
+void CleanupAndLoadCart(pemsa_handle_t emulator, const char* cart) {
+	((PemsaEmulator*)emulator)->getCartridgeModule()->cleanupAndLoad(cart);
+}
+
 double SampleAudio(pemsa_handle_t emulator) {
 	return ((PemsaEmulator *) emulator)->getAudioModule()->sample();
 }

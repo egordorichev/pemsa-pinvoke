@@ -41,6 +41,7 @@ PEMSA_API void *GetRam(pemsa_handle_t emulator);
 PEMSA_API uint8_t GetScreenColor(pemsa_handle_t emulator, int i);
 PEMSA_API void UpdateEmulator(pemsa_handle_t emulator, double delta);
 PEMSA_API void LoadCart(pemsa_handle_t emulator, const char *cart);
+PEMSA_API void CleanupAndLoadCart(pemsa_handle_t emulator, const char *cart);
 PEMSA_API double SampleAudio(pemsa_handle_t emulator);
 PEMSA_API double *SampleAudioMultiple(pemsa_handle_t emulator, double *samples, int nSamples);
 

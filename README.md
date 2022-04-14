@@ -1,5 +1,7 @@
 # pemsa-pinvoke
-pinvoke glue backend for pemsa pico8 runtime
+
+Pinvoke glue backend for pemsa pico8 runtime
+Currently used for [pemsa-3d](https://github.com/egordorichev/pemsa-3d) (based on Unity).
 
 ## Compiling
 
